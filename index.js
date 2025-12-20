@@ -1,20 +1,32 @@
 const express = require("express");
 const app = express();
+require('dotenv').config();
+
+const mongoose = require("mongoose")
+const bookRoutes = require('./Exercises/Exercise_2/routes/books')
+
 const PORT = 3000;
 
 app.use(express.json());
 
-let books = [
-  { id: 1, title: "Atomic Habits", author: "James Clear" },
-  { id: 2, title: "Deep Work", author: "Cal Newport" },
-];
+
 
 // 👇 Your routes go here
+
+// Exercise_2 Routes
+app.use('/books', bookRoutes)
+
+
 
 // get all books
 app.get("/books", (req, res) => {
   res.json(books);
 });
+
+let books = [
+  { id: 1, title: "Atomic Habits", author: "James Clear" },
+  { id: 2, title: "Deep Work", author: "Cal Newport" },
+];
 
 // Get a single book
 app.get("/books/:id", (req, res) => {
@@ -48,6 +60,16 @@ app.delete("/books/:id", (req, res) => {
   books = books.filter((b) => b.id != req.params.id);
   res.json(books);
 });
+
+
+
+
+// connect to mongoDB
+mongoose.connect(process.env.MONGO_URI)
+  .then(()=> console.log("Connected Successfully ✔"))
+  .catch(err => console.log("Connection Failed👎"))
+
+
 
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
