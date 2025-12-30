@@ -1,11 +1,16 @@
-const express = require("express");
+
+import express from 'express'
+import dotenv from 'dotenv'
+
+dotenv.config();
 const app = express();
-require('dotenv').config();
-
-const mongoose = require("mongoose")
-const bookRoutes = require('./Exercises/Exercise_2/routes/books')
-
 const PORT = 3000;
+
+
+import mongoose from 'mongoose';
+import bookRoutes from './Exercises/Exercise_2/routes/books.js'
+
+
 
 app.use(express.json());
 
@@ -15,6 +20,38 @@ app.use(express.json());
 
 // Exercise_2 Routes
 app.use('/books', bookRoutes)
+
+
+
+
+
+// Exercise_3 
+// Challenge: Build a Complete JWT-Based Auth System with Role-Based Access
+
+import userRoute from './Exercises/Exercise_3/routes/user.js'
+import authRoute from './Exercises/Exercise_3/routes/auth.js'
+import adminRoute from './Exercises/Exercise_3/routes/admin.js'
+
+
+import { logger } from './Exercises/Exercise_3/middlewares/loggers.js';
+import { notFound } from './Exercises/Exercise_3/middlewares/notFound.js';
+import { handleError } from './Exercises/Exercise_3/middlewares/handleErrors.js';
+
+// LOGGER
+app.use(logger)
+
+
+app.use('/users', userRoute)
+app.use('/auth', authRoute)
+
+// protected routes
+app.use('/admin', adminRoute)
+
+
+
+// not found route middleware
+app.use(notFound)
+
 
 
 
@@ -62,6 +99,9 @@ app.delete("/books/:id", (req, res) => {
 });
 
 
+
+// LAST ROUTE MIDDLEWARE
+app.use(handleError)
 
 
 // connect to mongoDB

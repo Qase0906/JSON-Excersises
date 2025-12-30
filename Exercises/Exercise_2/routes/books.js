@@ -1,5 +1,5 @@
-const express = require("express")
-const { createBook, getAllBooks, getBook, updateBook, deletBook } = require("../controllers/books")
+import express from 'express'
+import { createBook, getAllBooks, getBook, updateBook, deletBook } from "../controllers/books.js"
 const router = express.Router()
 
 
@@ -10,4 +10,4 @@ router.put('/:id', updateBook)
 router.delete('/:id', deletBook)
 
 
-module.exports = router
+export default router

@@ -1,20 +1,21 @@
-const Books = require("../models/BooksSchema");
+
+import Books from "../models/BooksSchema.js"
 
 // Get books from MongoDB
-exports.getAllBooks = async (req, res) => {
+export const getAllBooks = async (req, res) => {
   const books = await Books.find();
   res.json(books);
 };
 
 // Get a Single book from MongoDB
-exports.getBook = async (req, res) => {
+export const getBook = async (req, res) => {
   const { id } = req.params;
   const book = await Books.findById(id);
   res.json(book);
 };
 
 // Create
-exports.createBook = async (req, res) => {
+export const createBook = async (req, res) => {
   const book = new Books(req.body);
   const save = await book.save();
 
@@ -22,7 +23,7 @@ exports.createBook = async (req, res) => {
 };
 
 // Update
-exports.updateBook = async (req, res) => {
+export const updateBook = async (req, res) => {
   const { id } = req.params;
   const updatedBook = await Books.findByIdAndUpdate(id, req.body, {
     new: true,
@@ -42,7 +43,7 @@ exports.updateBook = async (req, res) => {
 
 
 // Update
-exports.deletBook = async (req, res) => {
+export const deletBook = async (req, res) => {
   const { id } = req.params;
   const deletedBook = await Books.findByIdAndDelete(id);
 
